@@ -8,29 +8,29 @@ import Addbooks from "../pages/Addbooks";
 
 const router = createBrowserRouter([
     {
-        path:'/',
-        Component:Root,
-        hydrateFallbackElement:<p>Loading...</p>,
-        children:[
+        path: '/',
+        Component: Root,
+        hydrateFallbackElement: <p>Loading...</p>,
+        children: [
             {
-                index:true,
-                element:<Home/>
+                index: true,
+                element: <Home />
             },
             {
-                path:'/books',
-                element:<Books/>,
+                path: '/books',
+                element: <Books />,
             },
             {
-                path:'/ebooks',
-                element:<Ebooks/>
+                path: '/ebooks',
+                element: <Ebooks />
             },
             {
-                path:'/membership',
-                element:<MemberShip/>
+                path: '/membership',
+                element: <MemberShip />
             },
             {
-                path:'/books/add',
-                element:<Addbooks/>
+                path: '/books/add',
+                element: <Addbooks />
             }
         ]
     }

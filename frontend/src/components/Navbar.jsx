@@ -15,11 +15,11 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className="bg-white fixed w-full top-0 z-50 py-4">
+    <nav className="bg-black fixed w-full top-0 z-50 py-4">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <NavLink to="/" className="text-xl font-bold uppercase tracking-wider">
+          <NavLink to="/" className="text-xl font-bold uppercase tracking-wider text-white">
             Book<span className="text-amber-500">Club.</span>
           </NavLink>
 
@@ -31,7 +31,7 @@ const Navbar = () => {
                 to={to}
                 className={({ isActive }) =>
                   `text-sm font-medium transition-colors ${
-                    isActive ? 'text-amber-500' : 'text-gray-700 hover:text-amber-500'
+                    isActive ? 'text-amber-500' : 'text-gray-200 hover:text-amber-500'
                   }`
                 }
               >
