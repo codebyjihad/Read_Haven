@@ -4,17 +4,16 @@ import { useBooks } from '../../context/BookContext';
 
 
 const Hero = () => {
-    const [searchinput , setSearchInput] = useState('')
-    const {books , filters,  updateFilters} = useBooks()
-    const handleSumbit = (e) => {
-      e.preventDefault()
-      updateFilters({
-        search:searchinput.trim(),
-        page:1
-      })
-    }
-
-    console.log(books)
+  const {books , filters , updateFilters} = useBooks()
+   const [searchinput , setSearchInput] = useState('')
+   const handleSumbit = (e) => {
+     e.preventDefault()
+     
+     updateFilters({
+       search:searchinput,
+       page:1
+     })
+   }
 
   return (
     <div className='bg-gray-900 min-h-[600px] relative overflow-hidden'>

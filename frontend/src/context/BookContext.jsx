@@ -54,7 +54,7 @@ export const BookProvider = ({ children }) => {
     }, [filters])
 
     const clearCurrentBook = useCallback(() => {
-        SetBooks(null)
+       SetCurrentBook(null)
     }, [])
 
     const updateFilters = useCallback(async (newFilters) => {
@@ -70,7 +70,7 @@ export const BookProvider = ({ children }) => {
             SetLoading(true)
             SetError(null)
 
-            const reponse = await axios.get(`http://localhost:3000/books${bookid}`)
+            const reponse = await axios.get(`http://localhost:3000/books/${bookid}`)
             SetCurrentBook(reponse.data)
 
             return reponse.data

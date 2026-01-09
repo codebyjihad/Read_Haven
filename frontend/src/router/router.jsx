@@ -1,10 +1,10 @@
 import { createBrowserRouter } from "react-router";
 import Root from "../layout/Root";
 import Home from "../pages/Home";
-import Books from "../pages/Books";
 import Ebooks from "../pages/Ebooks";
 import MemberShip from "../pages/MemberShip";
 import Addbooks from "../pages/Addbooks";
+import Shop from "../pages/shop/Shop";
 
 const router = createBrowserRouter([
     {
@@ -18,7 +18,7 @@ const router = createBrowserRouter([
             },
             {
                 path: '/books',
-                element: <Books />,
+                element: <Shop/>,
             },
             {
                 path: '/ebooks',
