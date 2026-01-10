@@ -1,40 +1,65 @@
-import axios from 'axios'
-import React from 'react'
+import React, { useEffect } from 'react'
+import { data, useParams } from 'react-router'
+import { useBooks } from '../../context/BookContext'
 import { useForm } from "react-hook-form"
-import { baseUrl } from '../../utils/baseUrl'
+import axios from 'axios'
+import { baseUrl } from '../../../utils/baseUrl'
 import { toast } from 'react-toastify'
-const Addbooks = () => {
-  const {
+
+
+const EditBooks = () => {
+    const {id} = useParams()
+    const {currentBook ,fetchBookdeitls} = useBooks()
+
+    const {
     register,
     handleSubmit,
     setValue
   } = useForm()
 
-  const onSubmit = async (data) => {
-     const price = parseFloat(data.price)
-     data.price = price
 
+useEffect(() => { 
+    fetchBookdeitls(id)
+} , [id , fetchBookdeitls])
+
+useEffect(() => {
+    if(currentBook){
+        setValue('title' , currentBook.title)
+        setValue('author' , currentBook.author)
+        setValue('publishedYear' , currentBook.publishedYear)
+        setValue('genre' , currentBook.genre)
+        setValue('price' , currentBook.price)
+        setValue('description' , currentBook.description)
+        setValue('imageUrl' , currentBook.imageUrl)
+    }
+} , [currentBook , setValue])
+
+  const onSubmit = async(data) => {
+    const price = parseFloat(data.price)
+    data.price = price
 
     try{
-          toast('Book added Successfully')
-           const response = await axios.post(`${baseUrl}/books` , data)
-           console.log(response)
+          const response = await axios.put(`${baseUrl}/books/${id}`, data)
+         if(response.data.acknowledged){
+           toast(`Updated Book Successfully !`)
+         }else{
+          toast('something wrong !')
+         }
+
     }catch(err){
-        toast('Error create New book !')
+        console.error(`Internal cleint Error ${err.message}`)
     }
   }
-
-
+  
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-4">Add new Book</h1>
+      <div className="container mx-auto px-4 py-8">
+      <h1 className="text-3xl font-bold mb-4">Edit Book</h1>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 max-w-5xl">
         <div>
           <label className="block text-gray-700">Title</label>
           <input
             type="text"
             {...register('title')}
-            placeholder='title'
             className="mt-1 p-2 block w-full border-gray-300 rounded-md shadow-sm"
           />
         </div>
@@ -42,7 +67,6 @@ const Addbooks = () => {
           <label className="block text-gray-700">Author</label>
           <input
             type="text"
-            placeholder='author'
             {...register('author')}
             className="mt-1 p-2 block w-full border-gray-300 rounded-md shadow-sm"
           />
@@ -51,7 +75,6 @@ const Addbooks = () => {
           <label className="block text-gray-700">Published Year</label>
           <input
             type="number"
-            placeholder='publishedYear'
             {...register('publishedYear')}
             className="mt-1 p-2 block w-full border-gray-300 rounded-md shadow-sm"
           />
@@ -61,7 +84,6 @@ const Addbooks = () => {
           <input
             type="text"
             {...register('genre')}
-            placeholder='genre'
             className="mt-1 p-2 block w-full border-gray-300 rounded-md shadow-sm"
           />
         </div>
@@ -71,7 +93,6 @@ const Addbooks = () => {
             type="number"
             step="0.01"
             {...register('price')}
-            placeholder='price'
             className="mt-1 p-2 block w-full border-gray-300 rounded-md shadow-sm"
           />
         </div>
@@ -79,9 +100,7 @@ const Addbooks = () => {
           <label className="block text-gray-700">Description</label>
           <textarea
             {...register('description')}
-            placeholder='description'
             className="mt-1 p-2 block w-full border-gray-300 rounded-md shadow-sm"
-            rows={4}
           />
         </div>
         <div>
@@ -89,7 +108,6 @@ const Addbooks = () => {
           <input
             type="text"
             {...register('imageUrl')}
-            placeholder='image_URL'
             className="mt-1 p-2 block w-full border-gray-300 rounded-md shadow-sm"
           />
         </div>
@@ -97,11 +115,11 @@ const Addbooks = () => {
           type="submit"
           className="bg-amber-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-amber-600 transition-colors"
         >
-          Upload
+          Save Changes
         </button>
       </form>
     </div>
   )
 }
 
-export default Addbooks
+export default EditBooks

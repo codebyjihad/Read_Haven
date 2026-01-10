@@ -1,5 +1,6 @@
 import { createContext, useCallback, useContext, useEffect, useState } from "react";
 import axios from 'axios'
+import { baseUrl } from "../../utils/baseUrl";
 
 const BookContext = createContext(null)
 
@@ -39,7 +40,7 @@ export const BookProvider = ({ children }) => {
                 }
             })
 
-            const response = await axios.get(`http://localhost:3000/books?${params}`)
+            const response = await axios.get(`${baseUrl}/books?${params}`)
             SetBooks(response.data.books)
             setpagination({
                 currentPage: response.data.currentPage,
@@ -70,7 +71,7 @@ export const BookProvider = ({ children }) => {
             SetLoading(true)
             SetError(null)
 
-            const reponse = await axios.get(`http://localhost:3000/books/${bookid}`)
+            const reponse = await axios.get(`${baseUrl}/books/${bookid}`)
             SetCurrentBook(reponse.data)
 
             return reponse.data

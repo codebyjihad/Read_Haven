@@ -5,6 +5,8 @@ import Ebooks from "../pages/Ebooks";
 import MemberShip from "../pages/MemberShip";
 import Addbooks from "../pages/Addbooks";
 import Shop from "../pages/shop/Shop";
+import EditBooks from "../pages/shop/EditBooks";
+import BookDeitals from "../pages/shop/BookDeitals";
 
 const router = createBrowserRouter([
     {
@@ -27,6 +29,14 @@ const router = createBrowserRouter([
             {
                 path: '/membership',
                 element: <MemberShip />
+            },
+            { 
+              path:`/books/edit/:id`,
+              element:<EditBooks/>
+            },
+            {
+                path:'/books/:id',
+                element:<BookDeitals/>
             },
             {
                 path: '/books/add',

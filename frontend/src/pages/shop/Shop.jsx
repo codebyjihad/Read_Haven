@@ -3,6 +3,10 @@ import { useBooks } from '../../context/BookContext'
 import BookGrid from './BookGrid'
 import CategoryNav from './CategoryNav'
 import SortBook from './SortBook'
+import Pagination from './Pagination'
+import axios from 'axios'
+import { baseUrl } from '../../../utils/baseUrl'
+import { toast } from 'react-toastify'
 
 const Shop = () => {
 
@@ -34,9 +38,22 @@ const Shop = () => {
         })
     }
 
-    const handleDeleteBook = () => {
-        console.log('Boook deleted')
+    const handlePageCHange = (newPage) => {
+       updateFilters({
+        page: newPage
+       })
     }
+
+    const handleDeleteBook =  async(id) => {
+     try{
+          await axios.delete(`${baseUrl}/books/${id}`)
+          toast('Book Deleted Successfully !')
+          fetchBooks()
+     }catch(err){
+        console.log(`Internal client  Error !${err}`)
+     }
+    }
+
 
     return (
         <div className='container mx-auto px-4 py-12 min-h-screen'>
@@ -57,6 +74,10 @@ const Shop = () => {
             <div className='py-8 md:px-8 '>
                 <BookGrid books={books} loading={loading} error={error} onDeleteBook={handleDeleteBook} />
             </div>
+            {/* pagination */}
+            {
+                pagination.totalPages > 1 && <Pagination totalPages={pagination.totalPages} currentPage={pagination. currentPage} onPageChange={handlePageCHange}/>
+            }
         </div>
     )
 }
